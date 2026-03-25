@@ -1,0 +1,21 @@
+create database db_bank;
+
+use db_bank;
+
+show tables;
+Tables created:
+account
+account_address
+account_details
+cc_trans_id_sequence
+credit_card
+creditcard_transaction
+my_sequence
+trans_id_sequence
+transaction
+user_pass
+
+insert into user_pass values('admin', 'admin@1234'),
+('test', 'test@1234'),
+('manager', 'manager@1234'),
+('staff', 'staff@1234');
