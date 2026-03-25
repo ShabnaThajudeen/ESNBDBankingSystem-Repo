@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+		
+    <context:annotation-config/>
+		
+	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	  <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+	  <property name="url" value="jdbc:MySQL://localhost:3306/db_bank"></property>
+	  <property name="username" value="root"></property>
+	  <property name="password" value="Sh@bna92"></property>
+	</bean>
+	
+	<bean id="mySessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	  <property name="dataSource" ref="ds"></property>
+	  <property name="hibernateProperties">
+	    <props>
+	      <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+	      <prop key="hibernate.show_sql">true</prop>
+	      <prop key="hibernate.hbm2ddl.auto">update</prop>
+	    </props>
+	  </property>
+	  <!-- <property name="mappingResources">
+	    <list>
+	      <value>user.hbm.xml</value>
+	    </list>
+	  </property> -->
+	  <property name="annotatedClasses">
+	    <list>
+	      <value>com.esnbd.esnbdonline.dto.AccountHolderDetails</value>
+	      <value>com.esnbd.esnbdonline.dto.Address</value>
+	      <value>com.esnbd.esnbdonline.dto.Account</value>
+	      <value>com.esnbd.esnbdonline.dto.SBAccount</value>
+	      <value>com.esnbd.esnbdonline.dto.CurrentAccount</value>
+	      <value>com.esnbd.esnbdonline.dto.User</value>
+	      <value>com.esnbd.esnbdonline.dto.AccountTransactions</value>
+	      <value>com.esnbd.esnbdonline.dto.CreditCard</value> 
+	      <value>com.esnbd.esnbdonline.dto.CreditCardTransactions</value>           
+	    </list>
+	  </property>
+	</bean>
+	
+	<bean id="template" class="org.springframework.orm.hibernate5.HibernateTemplate">
+             <property name="sessionFactory" ref="mySessionFactory"></property>                         
+    </bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+             <property name="sessionFactory" ref="mySessionFactory"></property>
+    </bean>
+    
+    <bean id="mmfDAO" class="com.esnbd.esnbdonline.dao.MainMenuFilterDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="mmfService" class="com.esnbd.esnbdonline.services.MainMenuFilterServiceImpl">
+      <property name="mmfDAO" ref="mmfDAO"></property>
+    </bean>
+    
+    <bean id="unsDAO" class="com.esnbd.esnbdonline.dao.UserNameSearchDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="unsService" class="com.esnbd.esnbdonline.services.UserNameSearchServiceImpl">
+      <property name="userNameSearchDAO" ref="unsDAO"></property>
+    </bean>
+    
+    <bean id="accCreationDAO" class="com.esnbd.esnbdonline.dao.AccountCreationDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="accCreationService" class="com.esnbd.esnbdonline.services.AccountCreationServiceImpl">
+      <property name="accCreationDAO" ref="accCreationDAO"></property>
+    </bean>
+    
+    <bean id="userAccSearchDAO" class="com.esnbd.esnbdonline.dao.UserAccountSearchDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="userAccSearchService" class="com.esnbd.esnbdonline.services.UserAccountSearchServiceImpl">
+      <property name="userAccSearchDAO" ref="userAccSearchDAO"></property>
+    </bean>	
+    
+    <bean id="transDAO" class="com.esnbd.esnbdonline.dao.TransactionDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="transService" class="com.esnbd.esnbdonline.services.TransactionServiceImpl">
+      <property name="transDAO" ref="transDAO"></property>
+    </bean>	
+    
+    <bean id="bsdDAO" class="com.esnbd.esnbdonline.dao.BankStatementDisplayDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="bsdService" class="com.esnbd.esnbdonline.services.BankStatementDisplayServiceImpl">
+      <property name="bsDisplayDAO" ref="bsdDAO"></property>
+    </bean>	
+    
+    <bean id="nccDAO" class="com.esnbd.esnbdonline.dao.NewCreditCardDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="nccService" class="com.esnbd.esnbdonline.services.NewCreditCardServiceImpl">
+      <property name="ncCardDAO" ref="nccDAO"></property>
+    </bean>	
+    
+    <bean id="cctDAO" class="com.esnbd.esnbdonline.dao.CreditCardTransactionDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="cctService" class="com.esnbd.esnbdonline.services.CreditCardTransactionServiceImpl">
+      <property name="ccTransDAO" ref="cctDAO"></property>
+    </bean>	
+    
+    <bean id="ccsDAO" class="com.esnbd.esnbdonline.dao.CreditCardSearchDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="ccsService" class="com.esnbd.esnbdonline.services.CreditCardSearchServiceImpl">
+      <property name="ccSearchDAO" ref="ccsDAO"></property>
+    </bean>	
+    
+    <bean id="ccsdDAO" class="com.esnbd.esnbdonline.dao.CreditCardStatementDisplayDAOImpl">
+      <property name="session" ref="template"></property>
+    </bean>
+    
+    <bean id="ccsdService" class="com.esnbd.esnbdonline.services.CreditCardStatementDisplayServiceImpl">
+      <property name="ccsDisplayDAO" ref="ccsdDAO"></property>
+    </bean>	
+    
+</beans>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+  <class name="com.esnbd.esnbdonline.dto.User" table="user_pass">
+    <id name="userName" column="username">
+      <generator class="assigned"/>
+    </id>
+    <property name="userId" column="userId"></property>
+    <property name="password" column="password"></property>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+.tab {
+  overflow: hidden;  
+  border: 1px solid #ccc;
+  background-color: #088F8F; 
+  margin: 5px 0px ;
+}
+
+.button-class:hover {
+  background-color: #E5E4E2;
+}
+
+.button-class {
+			background-color: #9FE2BF;
+			/* Green */
+			border: #9FE2BF;
+			color: #088F8F;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 6px auto;
+			cursor: pointer;
+			border-radius: 8px;
+			height: 20px;
+			width: 150px auto;
+}
+		
+.button-class-log{
+			background-color: #9FE2BF;
+			/* Green */
+			border: #9FE2BF;
+			color: #088F8F;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+			border-radius: 4px;
+			height: 20px;
+			width: 80px;
+}
+th{	
+	padding: 0px 8px;
+	text-align: left;
+	color: #fff;
+}
